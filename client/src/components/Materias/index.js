@@ -1,25 +1,52 @@
-import React, {useState} from 'react';
+import axios from 'axios';
+import React, {useState, useEffect} from 'react';
 import MateriaForm from "./MateriaForm";
 import MateriasList from "./MateriasList";
 
-const materias = [
-  {id: 1, nome: 'oi'},
-  {id: 2, nome: 'te'},
-  {id: 3, nome: 'ogai'}
-]
-
 function Materias() {
-  const [materiasList, setMateriaslist] = useState (materias);
+  const [materiasList, setMateriaslist] = useState ([]);
   
-  const updateHandler = () => {
-    //abre um componente de formulário com os campos
+  useEffect(() => {
+    axios.get('http://localhost:4000/materias', {})
+    .then (res => {
+      setMateriaslist(res.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
+  
+  const updateHandler = materia => {
+    axios.put('http://localhost:4000/materias/'+materia.id, materia)
+    .then (res => {
+      setMateriaslist(materiasList.map(item => {
+        if(item.id === materia.id) {
+          return {
+            ...item,
+            nome: materia.nome
+          }
+        } else {
+          return item
+        }
+      }))
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    
   }
   
   const deleteHandler = id => {
-    const newMateriasList = materiasList.filter(item => {
-      return item.id !== id
+    axios.delete('http://localhost:4000/materias/'+id, {})
+    .then (res => {
+      const newMateriasList = materiasList.filter(item => {
+        return item.id !== id
+      })
+      setMateriaslist(newMateriasList)
     })
-    setMateriaslist(newMateriasList)
+    .catch(err => {
+      console.log(err)
+    })
   }
   
   return (
