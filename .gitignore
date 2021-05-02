@@ -1,4 +1,3 @@
 server/.api/migrations/20210501153456_trilha.js
 server/.api/seeds/01-trilha-seeds.js
-server/.api/migrations/20210501153456_trilha.js
-server/.api/seeds/01-trilha-seeds.js
+server/db.js

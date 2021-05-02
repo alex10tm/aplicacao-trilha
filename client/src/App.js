@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import ListaDinamica from "./components/listaDinamica";
 import CreateMateria from "./components/createMateria";
 import CreateRelatorio from "./components/createRelatorio";
