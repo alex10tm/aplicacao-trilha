@@ -12,7 +12,7 @@ function Materias() {
   const [materiasList, setMateriaslist] = useState (materias);
   
   const updateHandler = () => {
-
+    //abre um componente de formulário com os campos
   }
   
   const deleteHandler = id => {
