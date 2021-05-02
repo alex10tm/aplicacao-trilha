@@ -79,24 +79,60 @@ server.delete('/materias/:id', async (req, res) =>{
   }
 });
 
-server.get('/relatorios', (req, res) =>{
-  
+server.get('/relatorios', async (req, res) =>{
+  try {
+    const relatorios = await db('relatorios');
+    res.json(relatorios)
+  } catch(err) {
+    console.log(err);
+  }
 });
 
-server.get('/relatorios/:id', (req, res) =>{
-  
+server.get('/relatorios/:id', async (req, res) =>{
+  const {id} = req.params
+
+  try {
+    const relatorioEncontrada = await db('relatorios').where({id})
+    relatorioEncontrada.length === 0 ? res.status(404).json({message: 'relatorio nao encontrada'}) : res.status(200).json(relatorioEncontrada)
+  } catch(err) {
+    console.log(err);
+  }
 });
 
-server.post('/relatorios', (req, res) =>{
-  
+server.post('/relatorios', async (req, res) =>{
+  const {nome} = req.body
+  if(!nome){
+    return res.status(400).json({message: 'você precisa enviar um nome para a nova relatorio'})
+  }
+  try {
+    await db('relatorios').insert({nome})
+    res.status(201).json({message: 'relatorio inserida com sucesso'})
+  } catch(err){
+    console.log(err);
+  }
 });
 
-server.put('/relatorios/:id', (req, res) =>{
-  
+server.put('/relatorios/:id', async (req, res) =>{
+  const {id} = req.params
+  const {nome} = req.body
+
+  try {
+    await db('relatorios').where({id}).update({nome})
+    res.status(200).json({message: 'registro atualizado com sucesso'})
+  } catch(err) {
+    console.log(err);
+  }
 });
 
-server.delete('/relatorios/:id', (req, res) =>{
-  
+server.delete('/relatorios/:id', async (req, res) =>{
+  const {id} = req.params
+
+  try {
+    await db('relatorios').where({id}).del()
+    res.status(200).json({message: 'registro deletado com sucesso'})
+  } catch(err) {
+    console.log(err);
+  }
 });
 
 module.exports = server;

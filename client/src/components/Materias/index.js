@@ -51,7 +51,6 @@ function Materias() {
   
   return (
     <div>
-      <h3>Matérias</h3>
       <div>
         <MateriaForm materiasList={materiasList} setMateriasList={setMateriaslist} />
         <MateriasList materiasList={materiasList} deleteHandler={deleteHandler} updateHandler={updateHandler} />
