@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 function Relatorio({relatorio, deleteHandler, updateHandler}) {
   const [isEditing, setIsEditing] = useState(false);
-  const [updatedRelatorio, setUpdatedRelatorio] =useState(false);
+  const [updatedRelatorio, setUpdatedRelatorio] = useState(false);
   
   const updateStateRelatorio = e => {
     setUpdatedRelatorio({
